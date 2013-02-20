@@ -67,15 +67,20 @@ def home():
 
 @app.route('/formList',methods=['HEAD','POST','GET'])
 def formList():
-    xml = """<forms>
-<form url="http://192.168.43.76:5000/getForm/Customer_Billing_Addition_123">Customer Billing 1</form>
-<form url="http://192.168.43.76:5000/getForm/Customer_Billing_Addition_123">Customer Billing 2</form>
+    xml = """
+<forms>
+    <form url="http://192.168.43.76:5000/getForm?formId=Customer_Billing_Addition_123">
+        Customer Billing 3    
+    </form>
+    <form  url="http://192.168.43.76:5000/getForm?formId=Customer_Billing_Addition_1234">
+        Customer Billing 2
+    </form>
 </forms>"""
     print xml
     return Response(xml, mimetype='text/xml')
 
-@app.route('/getForm/<formID>',methods=['HEAD','POST','GET'])
-def getForm(formID):
+@app.route('/getForm',methods=['HEAD','POST','GET'])
+def getForm():
     xml ="""
 <h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
   <h:head>
@@ -141,8 +146,9 @@ def getForm(formID):
     return Response(xml, mimetype='text/xml')
 
 
-@app.route('/submission/<api_key>',methods=['HEAD','POST','GET'])
-def submission(api_key):
+@app.route('/submission',methods=['HEAD','POST','GET'])
+def submission():
+    print request.headers
     if request.environ['REQUEST_METHOD'] == 'HEAD':
         response = make_response(render_template('head_request.txt'))
         response.headers['X-OpenRosa-Version'] = '1'

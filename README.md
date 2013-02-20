@@ -28,7 +28,9 @@ Links
 * https://bitbucket.org/javarosa/javarosa/wiki/OpenRosaAPI
 * https://bitbucket.org/javarosa/javarosa/wiki/UserRegistrationAPI
 * https://bitbucket.org/javarosa/javarosa/wiki/OpenRosaMetaDataSchema
-
+* https://bitbucket.org/javarosa/javarosa/wiki/AuthenticationAPI
+* https://bitbucket.org/javarosa/javarosa/wiki/FormListAPI
+* https://bitbucket.org/javarosa/javarosa/wiki/OpenRosaRequest
 
 Based on
 ================
