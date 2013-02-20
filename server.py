@@ -67,17 +67,36 @@ def home():
 
 @app.route('/formList',methods=['HEAD','POST','GET'])
 def formList():
-    xml = """
-<forms>
-    <form url="http://192.168.43.76:5000/getForm?formId=Customer_Billing_Addition_123">
-        Customer Billing 3    
-    </form>
-    <form  url="http://192.168.43.76:5000/getForm?formId=Customer_Billing_Addition_1234">
-        Customer Billing 2
-    </form>
-</forms>"""
+    xml = """<?xml version='1.0' encoding='UTF-8' ?>
+<xforms xmlns="http://openrosa.org/xforms/xformsList">
+  <xform>
+    <formID>mydomain.org:formId</formID>
+    <name>Form with zero or more additional files</name>
+    <version>1.1</version>
+    <hash>md5:c28fc778a9291672badee04ac880a05d</hash>
+    <descriptionText>A possibly very long description of the form</descriptionText>
+    <downloadUrl>http://myhost.com/app/path/getMe/formIdA</downloadUrl>
+  </xform>
+  <xform>
+    <formID>http://mydomain.org/uniqueFormXmlns</formID>
+    <name>Form without additional files</name>
+    <version>v50 alpha</version>
+    <hash>md5:c28fc778a9291672badee04ac770a05d</hash>
+    <descriptionUrl>http://mysecondhost.com/a/description/getMe@formId=uniqueKey</descriptionUrl>
+    <downloadUrl>http://mysecondhost.com/a/different/path/getMe@formId=uniqueKey</downloadUrl>
+  </xform>
+  <xforms-group>
+     <groupID>someId</groupID>
+     <name>Short name of grouping</name>
+     <listUrl>http://whateverhost.com/other/path/forDownload?group=fido</listUrl>
+     <descriptionText>Longer description of what is here</descriptionText>
+     <descriptionUrl>http://morehost.com/description/link</descriptionUrl>
+  </xforms-group>
+</xforms>"""
     print xml
-    return Response(xml, mimetype='text/xml')
+    response = Response(xml, mimetype='text/xml')
+    response.headers['X-OpenRosa-Version'] = '1'
+    return response
 
 @app.route('/getForm',methods=['HEAD','POST','GET'])
 def getForm():
@@ -143,7 +162,10 @@ def getForm():
   </h:body>
 </h:html>
 """
-    return Response(xml, mimetype='text/xml')
+    response = Response(xml, mimetype='text/xml')
+    response.headers['X-OpenRosa-Version'] = '1'
+
+    return response
 
 
 @app.route('/submission',methods=['HEAD','POST','GET'])
